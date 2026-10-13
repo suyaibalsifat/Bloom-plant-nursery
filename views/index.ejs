@@ -1,0 +1,77 @@
+<%- include('partials/header') %>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bring Nature Indoors</h1>
+      <p>Discover beautiful, sustainable plants for your home and garden.</p>
+      <a href="/shop" class="btn btn-primary">Shop Now</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Featured Plants</h2>
+    <div class="plant-grid">
+      <% featured.forEach(plant=> { %>
+        <div class="plant-card">
+          <a href="/product/<%= plant.id %>">
+            <img src="<%= plant.image %>" alt="<%= plant.name %>" />
+          </a>
+          <div class="plant-card-body">
+            <h3><a href="/product/<%= plant.id %>">
+                <%= plant.name %>
+              </a></h3>
+            <p class="price">$<%= plant.price.toFixed(2) %>
+            </p>
+            <% const r=getAverageRating(plant.id); if (r) { %>
+              <p class="card-rating">⭐ <%= r %> / 5</p>
+              <% } %>
+                <span class="badge <%= plant.careLevel.toLowerCase() %>">
+                  <%= plant.careLevel %>
+                </span>
+                <button class="btn btn-add" onclick="addToCart(<%= plant.id %>)">Add to Cart</button>
+          </div>
+        </div>
+        <% }) %>
+    </div>
+  </section>
+
+  <section class="section categories-section">
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="category-grid">
+      <a href="/shop?category=Indoor" class="category-card">
+        <h3>Indoor Plants</h3>
+        <p>Perfect for your home</p>
+      </a>
+      <a href="/shop?category=Outdoor" class="category-card">
+        <h3>Outdoor Plants</h3>
+        <p>For gardens and balconies</p>
+      </a>
+      <a href="/shop?careLevel=Easy" class="category-card">
+        <h3>Low Maintenance</h3>
+        <p>Easy to care for</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section stats-section">
+    <div class="stats-grid">
+      <div class="stat">
+        <h3>100%</h3>
+        <p>Organic</p>
+      </div>
+      <div class="stat">
+        <h3>Plastic-Free</h3>
+        <p>Packaging</p>
+      </div>
+      <div class="stat">
+        <h3>500+</h3>
+        <p>Happy Customers</p>
+      </div>
+      <div class="stat">
+        <h3>50+</h3>
+        <p>Plant Varieties</p>
+      </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>

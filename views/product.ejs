@@ -1,0 +1,139 @@
+<%- include('partials/header') %>
+
+  <section class="section product-detail">
+    <a href="/shop" class="back-link">← Back to Shop</a>
+    <div class="product-detail-grid">
+      <div class="product-image">
+        <img src="<%= plant.image %>" alt="<%= plant.name %>" />
+      </div>
+      <div class="product-info">
+        <h1>
+          <%= plant.name %>
+        </h1>
+        <p class="scientific"><em>
+            <%= plant.scientificName %>
+          </em></p>
+        <p class="price-large">$<%= plant.price.toFixed(2) %>
+        </p>
+
+        <% if (avgRating) { %>
+          <p class="avg-rating">⭐ <%= avgRating %> / 5 <span class="review-count">(<%= reviewCount %> review<%=
+                    reviewCount> 1 ? 's' : '' %>)</span></p>
+          <% } else { %>
+            <p class="avg-rating no-reviews">No reviews yet — be the first!</p>
+            <% } %>
+
+              <span class="badge <%= plant.careLevel.toLowerCase() %>">
+                <%= plant.careLevel %> Care
+              </span>
+              <span class="badge category">
+                <%= plant.category %>
+              </span>
+              <p class="description">
+                <%= plant.description %>
+              </p>
+
+              <div class="care-details">
+                <h3>Care Requirements</h3>
+                <ul>
+                  <li><strong>Light:</strong>
+                    <%= plant.light %>
+                  </li>
+                  <li><strong>Water:</strong>
+                    <%= plant.water %>
+                  </li>
+                </ul>
+              </div>
+
+              <button class="btn btn-primary btn-large" onclick="addToCart(<%= plant.id %>)">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REVIEWS SECTION ===== -->
+  <section class="section" id="reviews">
+    <h2 class="section-title">Customer Reviews</h2>
+
+    <!-- Existing Reviews -->
+    <div class="reviews-list">
+      <% if (reviews.length===0) { %>
+        <p class="no-reviews-msg">No reviews yet. Share your experience below!</p>
+        <% } else { %>
+          <% reviews.forEach(review=> { %>
+            <div class="review-card">
+              <div class="review-header">
+                <strong>
+                  <%= review.name %>
+                </strong>
+                <span class="review-date">
+                  <%= review.date %>
+                </span>
+              </div>
+              <div class="review-stars">
+                <% for (let i=1; i <=5; i++) { %>
+                  <span class="<%= i <= review.rating ? 'star filled' : 'star' %>">★</span>
+                  <% } %>
+              </div>
+              <p class="review-comment">
+                <%= review.comment %>
+              </p>
+            </div>
+            <% }) %>
+              <% } %>
+    </div>
+
+    <!-- Add Review Form -->
+    <div class="review-form-wrapper">
+      <h3>Write a Review</h3>
+      <form action="/product/<%= plant.id %>/review" method="POST" class="review-form">
+        <label for="review-name">Your Name *</label>
+        <input type="text" id="review-name" name="name" required />
+
+        <label for="review-rating">Rating *</label>
+        <select id="review-rating" name="rating" required>
+          <option value="">Select a rating</option>
+          <option value="5">★★★★★ — Excellent</option>
+          <option value="4">★★★★ — Good</option>
+          <option value="3">★★★ — Okay</option>
+          <option value="2">★★ — Poor</option>
+          <option value="1">★ — Bad</option>
+        </select>
+
+        <label for="review-comment">Your Review *</label>
+        <textarea id="review-comment" name="comment" rows="4" required></textarea>
+
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+      </form>
+    </div>
+  </section>
+
+  <% if (related.length> 0) { %>
+    <section class="section">
+      <h2 class="section-title">You May Also Like</h2>
+      <div class="plant-grid">
+        <% related.forEach(item=> { %>
+          <div class="plant-card">
+            <a href="/product/<%= item.id %>">
+              <img src="<%= item.image %>" alt="<%= item.name %>" />
+            </a>
+            <div class="plant-card-body">
+              <h3><a href="/product/<%= item.id %>">
+                  <%= item.name %>
+                </a></h3>
+              <p class="price">$<%= item.price.toFixed(2) %>
+              </p>
+              <% const r=getAverageRating(item.id); if (r) { %>
+                <p class="card-rating">⭐ <%= r %> / 5</p>
+                <% } %>
+                  <span class="badge <%= item.careLevel.toLowerCase() %>">
+                    <%= item.careLevel %>
+                  </span>
+                  <button class="btn btn-add" onclick="addToCart(<%= item.id %>)">Add to Cart</button>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+    </section>
+    <% } %>
+
+      <%- include('partials/footer') %>

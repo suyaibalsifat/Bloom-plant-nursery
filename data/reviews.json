@@ -1,0 +1,36 @@
+{
+  "reviews": [
+    {
+      "id": 1,
+      "plantId": 1,
+      "name": "Ayesha R.",
+      "rating": 5,
+      "comment": "Arrived healthy and beautifully packaged. The Monstera is thriving!",
+      "date": "2024-09-12"
+    },
+    {
+      "id": 2,
+      "plantId": 1,
+      "name": "Tanvir H.",
+      "rating": 4,
+      "comment": "Great plant, but took a few days to adjust to my room's light.",
+      "date": "2024-09-18"
+    },
+    {
+      "id": 3,
+      "plantId": 3,
+      "name": "Nusrat J.",
+      "rating": 5,
+      "comment": "The Snake Plant is perfect for my desk. Almost zero maintenance!",
+      "date": "2024-09-20"
+    },
+    {
+      "id": 4,
+      "plantId": 2,
+      "name": "Rafi A.",
+      "rating": 4,
+      "comment": "Fiddle Leaf Fig is stunning but needs consistent watering. Worth it.",
+      "date": "2024-09-22"
+    }
+  ]
+}

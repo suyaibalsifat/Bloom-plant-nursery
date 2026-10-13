@@ -1,0 +1,64 @@
+<%- include('partials/header') %>
+
+  <section class="page-header">
+    <h1>Our Plants</h1>
+    <p>Browse our collection of healthy, sustainable plants.</p>
+  </section>
+
+  <section class="section">
+    <div class="filter-bar">
+      <div class="filter-group">
+        <span>Care Level:</span>
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="easy">Easy</button>
+        <button class="filter-btn" data-filter="moderate">Moderate</button>
+        <button class="filter-btn" data-filter="hard">Hard</button>
+      </div>
+      <div class="filter-group">
+        <span>Category:</span>
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="indoor">Indoor</button>
+        <button class="filter-btn" data-category="outdoor">Outdoor</button>
+      </div>
+      <div class="filter-group">
+        <label for="sort">Sort:</label>
+        <select id="sort">
+          <option value="default">Default</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="name">Name A-Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="plant-grid" id="plant-grid">
+      <% plants.forEach(plant=> { %>
+        <div class="plant-card" data-care="<%= plant.careLevel.toLowerCase() %>"
+          data-category="<%= plant.category.toLowerCase() %>" data-price="<%= plant.price %>"
+          data-name="<%= plant.name %>">
+          <a href="/product/<%= plant.id %>">
+            <img src="<%= plant.image %>" alt="<%= plant.name %>" />
+          </a>
+          <div class="plant-card-body">
+            <h3><a href="/product/<%= plant.id %>">
+                <%= plant.name %>
+              </a></h3>
+            <p class="price">$<%= plant.price.toFixed(2) %>
+            </p>
+            <% const r=getAverageRating(plant.id); if (r) { %>
+              <p class="card-rating">⭐ <%= r %> / 5</p>
+              <% } %>
+                <span class="badge <%= plant.careLevel.toLowerCase() %>">
+                  <%= plant.careLevel %>
+                </span>
+                <span class="badge category">
+                  <%= plant.category %>
+                </span>
+                <button class="btn btn-add" onclick="addToCart(<%= plant.id %>)">Add to Cart</button>
+          </div>
+        </div>
+        <% }) %>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
